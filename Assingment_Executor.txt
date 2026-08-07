@@ -1,0 +1,17 @@
+Assignment 1: Parallel Number Calculator
+
+
+Create a Java program that uses ExecutorService and CompletableFuture to perform three calculations simultaneously:
+- Check whether a number is prime.
+- Calculate the factorial of the number.
+- Calculate the square of the number.
+
+For example, if:
+
+Number = 5
+
+Expected output:
+
+Prime: true
+Factorial: 120
+Square: 25
