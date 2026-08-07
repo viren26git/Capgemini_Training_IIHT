@@ -1,0 +1,22 @@
+Assignment 2: Student Marks Processing
+
+Create a program that processes a student's marks using multiple asynchronous tasks.
+
+Input:
+Student Name = Rahul
+Maths = 80
+Java = 75
+Database = 90
+
+Perform these operations concurrently:
+- Calculate total marks.
+- Calculate average marks.
+- Find the highest mark.
+- Determine whether the student passed.
+
+Expected Output
+Student: Rahul
+Total: 245
+Average: 81.66
+Highest: 90
+Result: PASS
