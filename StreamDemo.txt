@@ -1,0 +1,85 @@
+package capg.demos;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
+class Product1 {
+	
+	private int id;
+	private String name;
+	private double price;
+	private String category;
+	
+	public Product1(int id, String name, double price, String category) {
+		this.id= id;
+		this.name = name;
+		this.price = price;
+		this.category = category;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+	
+	public String toString() {
+		return id + " | " + name + " | " + price + " | " + category;
+	}
+}
+
+public class Streamdemo {
+
+	public static void main(String[] args) {
+		
+		List<Product1> products = Arrays.asList(
+				    new Product1(1, "Laptop", 75000, "Electronics"),
+		            new Product1(2, "Mobile", 40000, "Electronics"),
+		            new Product1(3, "Tablet", 30000, "Electronics"),
+		            new Product1(4, "Chair", 8000, "Furniture"),
+		            new Product1(5, "TV", 60000, "Electronics"),
+		            new Product1(6, "Headphones", 5000, "Electronics"),
+		            new Product1(7, "Keyboard", 3000, "Electronics"),
+		            new Product1(8, "Laptop", 75000, "Electronics")
+				);
+		
+		//Filter
+		products.stream()
+		        .filter(p -> p.getPrice() >= 30000)
+		        .forEach(System.out::println); 
+		
+		System.out.println("============SORT======================="); 
+		//sort
+		products.stream()
+		        .sorted(Comparator.comparing(Product1::getPrice).reversed())
+		        .forEach(System.out::println); 
+		
+		System.out.println("===============SKIP===================="); 
+		products.stream()
+		        .skip(3)
+		        .forEach(System.out::println); 
+		
+		System.out.println("===============LIMIT===================="); 
+		products.stream()
+		        .limit(4)
+		        .forEach(System.out::println); 
+		
+		System.out.println("===============LIMIT + SKIP===================="); 
+		products.stream()
+		        .skip(3)
+		        .limit(3)
+		        .forEach(System.out::println); 
+		
+	}
+}
