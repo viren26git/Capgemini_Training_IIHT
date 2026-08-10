@@ -1,0 +1,144 @@
+package capg.demos;
+
+class Order{
+	private String productName;
+	private double price;
+	private int quantity;
+	
+	public Order(String productName, double price, int quantity)
+	{
+		this.productName = productName;
+		this.price = price;
+		this.quantity = quantity;
+	}
+	
+	public double getTotal() {
+		return price * quantity;
+	}
+	
+	public String getProductName() {
+		return productName;
+	}
+}
+
+interface Discount{
+	double calculate(double amount);
+}
+
+class RegularDiscount implements Discount{
+	@Override
+	public double calculate(double amount) {
+		
+		return amount * 0.05;
+	}
+}
+
+class PremiumDiscount implements Discount{
+	@Override
+	public double calculate(double amount) {
+		
+		return amount * 0.10;
+	}
+}
+//--------------------------------------------------------//
+
+interface Payment{
+	 void pay(double amount);
+}
+
+class UpiPayment implements Payment{
+
+	@Override
+	public void pay(double amount) {
+		System.out.println("Paid INR. " + amount + " using the UPI"); 
+	}
+}
+
+class CreditCardPayment implements Payment{
+
+	@Override
+	public void pay(double amount) {
+		System.out.println("Paid INR. " + amount + " using the Credit Card"); 
+	}
+}
+
+class DebitCardPayment implements Payment{
+
+	@Override
+	public void pay(double amount) {
+		System.out.println("Paid INR. " + amount + " using the Debit Card"); 
+	}
+}
+
+//----------------------------------------------------------//
+interface OrderRepository{
+	void save(Order order);
+}
+
+class MYSQLOrderRepository implements OrderRepository{
+
+	@Override
+	public void save(Order order) {
+		System.out.println("Order saved in MYSQL");
+	}
+}
+
+//---------------------------------------------------------//
+interface Notification{
+	void send(String message);
+}
+
+class EmailNotification implements Notification{
+
+	@Override
+	public void send(String message) {
+		System.out.println("Email sent: " + message); 
+		
+	}
+}
+
+//------------------------------------------------------------//
+
+class OrderService{
+	private OrderRepository repository;
+	private Payment payment;
+	private Discount discount;
+	private Notification notification;
+	
+	public OrderService(OrderRepository repository, Payment payment, Discount discount, Notification notification) {
+		super();
+		this.repository = repository;
+		this.payment = payment;
+		this.discount = discount;
+		this.notification = notification;
+	}
+	
+	public void placeOrder(Order order) {   // association
+		
+		double total = order.getTotal();
+		double discountAmount = discount.calculate(total);
+		double finalAmount = total - discountAmount;
+		repository.save(order); 
+		payment.pay(finalAmount); 
+		notification.send("Order placed for" + order.getProductName()); 
+		
+		System.out.println("Final Amount :" + finalAmount); 
+	}
+}
+
+
+public class SolidDemo {
+	public static void main(String[] args) {
+		
+		Order order = new Order("Laptop",75000, 1);
+		
+		OrderRepository repository = new MYSQLOrderRepository();
+		Payment payment = new CreditCardPayment();
+		Discount discount = new PremiumDiscount();
+		Notification notification = new EmailNotification();
+
+		OrderService service = new OrderService(repository,payment, discount, notification);
+		service.placeOrder(order); 
+		
+	}
+}
