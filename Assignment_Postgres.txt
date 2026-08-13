@@ -1,0 +1,114 @@
+Tables
+
+1. categories : Stores product categories.
+
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT
+);
+
+
+2. suppliers: Stores supplier information.
+
+CREATE TABLE suppliers (
+    supplier_id SERIAL PRIMARY KEY,
+    supplier_name VARCHAR(100) NOT NULL,
+    contact_email VARCHAR(100),
+    phone VARCHAR(20)
+);
+
+
+3. products: Stores product details, linked to categories and suppliers.
+
+CREATE TABLE products (
+    product_id SERIAL PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    category_id INT REFERENCES categories(category_id) ,
+    supplier_id INT REFERENCES suppliers(supplier_id) ,
+    price NUMERIC(10, 2) CHECK (price >= 0),
+    stock_quantity INT CHECK (stock_quantity >= 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-----Insert 3 categories-----
+
+INSERT INTO categories (category_name, description) VALUES
+('Electronics', 'Devices and gadgets'),
+('Books', 'Printed and digital books'),
+('Clothing', 'Apparel and accessories');
+
+-----Insert 2 suppliers------
+
+INSERT INTO suppliers (supplier_name, contact_email, phone) VALUES
+('Best Supplier Inc.', 'contact@bestsupplier.com', '123-456-7890'),
+('Global Goods', 'sales@globalgoods.com', '987-654-3210');
+
+-----Insert 5 products-------
+
+INSERT INTO products (product_name, category_id, supplier_id, price, stock_quantity) VALUES
+('Smartphone Model X', 1, 1, 699.99, 50),
+('Wireless Headphones', 1, 2, 199.99, 30),
+('Mystery Novel', 2, 1, 14.99, 100),
+('T-shirt Classic', 3, 2, 9.99, 200),
+('E-reader', 1, 1, 129.99, 10);
+
+
+Questions (DDL + DML)
+Write SQL to create the three tables: categories, suppliers, and products.
+
+(a) Retrieve a list of all products with their category name and supplier name.
+(b) Find all products where stock quantity is below 5.
+(c) Add a new column discount_percent to the products table with a default value of 0.
+(d) Write a query to reduce the price of all products in the "Electronics" category by 15%.
+
+Questions (Aggregate, Filtering, Grouping, Sorting)
+(e) Find the total number of products available in the products table.
+(f) Find the average price of all products.
+(g) Find the maximum and minimum price of products in the "Electronics" category.
+(h) List categories along with the count of products in each category.
+(i) List suppliers who supply products priced between $50 and $200.
+(j) Find all products whose category_id is in the list of category IDs (1, 3).
+(k) Find the total stock quantity per category but only for categories having more than 1 product.
+(l) List all products grouped by supplier and show the average price per supplier, but only for suppliers whose average product price is greater than $100.
+(m) List all products sorted by price in descending order.
+(n) List the total value of stock (price * stock_quantity) for each category, ordered by total value from highest to lowest.
+
+10 Questions on JOINS
+(a) Write a query to list all products with their corresponding category name using an INNER JOIN.
+(b) Write a query to list all products with their category name, including products that do not belong to any category (LEFT JOIN).
+(c) Write a query to list all categories and the count of products in each category, including categories with no products (LEFT JOIN and GROUP BY).
+(d) Write a query to list all products along with their supplier names, including products that have no supplier assigned (LEFT JOIN).
+(e) Write a query to list all suppliers and the products they supply, including suppliers who supply no products (RIGHT JOIN).
+(f) Write a query to find all products that do not have a supplier assigned.
+(g) Write a query to get all products with their category name and supplier name using multiple JOINs (join products with both categories and suppliers).
+(h) Write a query to get a list of all suppliers and categories, even if there are no products linking them (FULL OUTER JOIN between suppliers and categories).
+(i) Write a query to find products where the supplier's contact email is not null using a join.
+(j) Write a query to find categories that have products supplied by supplier named 'Global Goods'.
+
+
+
+Questions on Functions
+Question 1:
+Create a user-defined function named get_product_stock_value(product_id INT) that returns the total stock value (price * stock quantity) of a given product.
+
+
+Question 2:
+Create a function named get_supplier_email(supplier_name TEXT) that returns the email address of the supplier with the given name.
+
+
+Question 3:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
