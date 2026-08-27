@@ -1,0 +1,18 @@
+1) open 1st cmd --> Generate a Kafka Cluster ID
+D:\Kafka\kafka_2.13-4.3.1> bin\windows\kafka-storage.bat random-uuid
+
+o/p --> BXHLzlC_SK6Vm5VQaXiqsQ - cluster id
+
+
+2) in 1st cmd --> run -->
+D:\Kafka\kafka_2.13-4.3.1>bin\windows\kafka-storage.bat format --standalone -t BXHLzlC_SK6Vm5VQaXiqsQ -c config\server.properties
+(if it is already formatted then don't run the above command but run the below command )
+
+Start the Kakfa cluster(below command)
+run --> D:\Kafka\kafka_2.13-4.3.1>bin\windows\kafka-server-start.bat config\server.properties
+
+3) open cmd 2nd
+D:\Kafka\kafka_2.13-4.3.1> bin\windows\kafka-topics.bat --create --topic booking-events --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
+
+4) in same 2nd cmd --> run --> show all topics
+D:\Kafka\kafka_2.13-4.3.1> bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
